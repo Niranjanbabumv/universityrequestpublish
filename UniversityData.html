@@ -1,0 +1,118 @@
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="app.js"></script>
+	<style>
+			.container {
+			  display: flex;
+			}
+			.container > div {
+			  flex: 1; /*grow*/
+			}
+			.mainBox {
+			  position: absolute;
+			  left: 70px;
+			  width: 1200px;
+			  height: 910px;
+			  border: 1px solid black;
+			}
+			.insideBox {
+			  position:absolute;
+			  left: 40px; 
+			  width: 1100px;
+			  border: 1px solid black;
+			}
+	</style>
+</head>
+	<body ng-app = "myModule">
+			<div class="mainBox"  ng-controller = "myControllerStudent">
+					<p style="text-align: center;font-family: cursive;font-style: normal;">Illinios State University</p><div align="right" style="padding-right: 50px;"><input type="submit" class="submit" value="Login" id = "submit"></div>
+					<p style="text-align: center;font-family: cursive;font-style: normal;">Address : 100 N University ST, Normal, IL 61761, USA  Telephone: 815-226-4901</p>
+					<hr />
+			<p style="font-family: cursive;font-style: normal;font-size: x-large; padding-left:40px;">Applications for Admission</p>
+				<a href="#" style="padding-left:40px;" ng-click="moveToRequestTable()">{{selectedApplicantData.requestId}}</a>
+				<br><br>
+			<div class="insideBox">
+				<div>
+				<br>
+					<div>
+						&nbsp;&nbsp;<img ng-src = "{{loginIcon.loginPngLoc}}" alt = "{{loginIcon.name}}" style = "height:20px; width:30px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size= "5"><b><i>{{ "Applicant Details" }}</i></b></font>
+					</div>
+					<hr />
+					<div class="container">
+						<div>
+							&nbsp;&nbsp;<i><b>Legal Name :</b></i><br><br>
+							&nbsp;&nbsp;<input type ="text" id= "name" ng-model="selectedApplicantData.name" disabled>
+						</div>
+						<div>
+							&nbsp;&nbsp;<i><b>SSN :</b></i><br><br>
+							&nbsp;&nbsp;<input type="text" id="ssn" ng-model="selectedApplicantData.ssn" disabled>
+						</div>
+						<div>
+							&nbsp;&nbsp;<i><b>Date Of Birth (mm/dd/yyyy) :</b></i><br><br>
+							&nbsp;&nbsp;<input type="date" id="dob" ng-model="dateOfBirth" disabled>
+						</div>
+					</div>
+					<br><br>
+					<div class="container">
+						<div>
+							&nbsp;&nbsp;<i><b>Gender :</b></i><br><br>
+							&nbsp;&nbsp;<input type="radio" id="gender" ng-model="selectedApplicantData.gender" value="Male" disabled>Male
+							&nbsp;&nbsp;<input type="radio" id="gender" ng-model="selectedApplicantData.gender" value="Female" disabled>Female
+						</div>
+						<div>
+							&nbsp;&nbsp;<i><b>Email :</b></i><br><br>
+							&nbsp;&nbsp;<input type="text" id="emailId" ng-model="selectedApplicantData.email" disabled>
+						</div>
+						<div>
+							&nbsp;&nbsp;<i><b>Cell Phone :</b></i><br><br>
+							&nbsp;&nbsp;<input type="text" id="countryCode" style="width: 3em;" ng-model="selectedApplicantData.countryCode" disabled>&nbsp;&nbsp;<input type="text" id="phoneNumber" ng-model="selectedApplicantData.phoneNumber" disabled>
+						</div>
+					</div>
+					<br><br>
+					<div class="container">
+						<div>
+							&nbsp;&nbsp;<i><b>Address :</b></i><br><br>
+							&nbsp;&nbsp;<input type="text" id="address" style="width: 30em;" ng-model="selectedApplicantData.address" disabled>
+						</div>
+						<div>
+							&nbsp;&nbsp;<i><b>Download Photo Id Proof :</b></i><br><br>
+							&nbsp;&nbsp;<a href="#">{{attachment}}</a>
+						</div>
+					</div>
+					<br><br>
+					<div class="container">
+						<div>
+							&nbsp;&nbsp;<i><b>Digital Identification No. :</b></i><br><br>
+							&nbsp;&nbsp;<input type="text" id="digitalId" ng-model="selectedApplicantData.digitalId" disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Verify" ng-click="verify()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div style="display:inline-block;" ng-show="success"><img ng-src="{{successIcon.successPngLoc}}" width="30" height="20"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size= "4"><b><i>{{"Verified"}}</i></b></font></div><div style="display:inline-block;" ng-show="failure"><img ng-src="{{errorIcon.errorPngLoc}}" width="30" height="20"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size= "4"><b><i>{{"Not Verified"}}</i></b></font></div>
+						</div>
+					</div>
+					<br><br>		
+					<div>
+						&nbsp;&nbsp;<img ng-src = "{{loginIcon.loginPngLoc}}" alt = "{{loginIcon.name}}" style = "height:20px; width:30px;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size= "5"><b><i>{{ "Course Details" }}</i></b></font>
+					</div>
+					<hr />		
+					<br>
+					<div class="container">
+						<div>
+							&nbsp;&nbsp;<i><b>Applying For :</b></i><br><br>
+							&nbsp;&nbsp;<input type="radio" id="applyingFor" ng-model="selectedApplicantData.applyingFor" value="UG" disabled>UG
+							&nbsp;&nbsp;<input type="radio" id="applyingFor" ng-model="selectedApplicantData.applyingFor" value="PG" disabled>PG
+						</div>
+						<div>
+							&nbsp;&nbsp;<i><b>Course :</b></i><br><br>
+							&nbsp;&nbsp;<select ng-model="selectedApplicantData.selectedCourse" ng-options="x for x in coursenames" disabled></select>
+						</div>
+					</div>
+					<br><br>		
+					<div>
+					&nbsp;&nbsp;<input type="submit" id = "Approve" value="Approve"  ng-click="updateStatus('Approved')"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" id = "Reject" value="Reject"  ng-click="updateStatus('Rejected')"/>
+					</div>
+					<br><br>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

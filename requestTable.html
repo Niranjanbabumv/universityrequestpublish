@@ -1,0 +1,149 @@
+<html ng-app = "myModule">
+<head>
+<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="app.js"></script>
+<style>
+            div.tab {
+              overflow: hidden;
+              height: 30px;
+              border: 1px solid #ccc;
+              background-color: #f1f1f1;
+            }
+ 
+            div.tab button {
+              background-color: inherit;
+              float: left;
+              border: none;
+              outline: none;
+              cursor: pointer;
+              padding: 6px 40px;
+              transition: 0.3s;
+              font-size: 15px;
+              font-style: italic;
+            }
+ 
+            div.tab button:hover {
+              background-color: #ddd;
+            }
+ 
+            div.tab button.active {
+              background-color: #ccc;
+            }
+			.container {
+			  display: flex;
+			}
+			.container > div {
+			  flex: 1; /*grow*/
+			}
+			.mainBox {
+			  position: absolute;
+			  left: 200px;
+			  width: 900px;
+			  height: 600px;
+			  border: 1px solid black;
+			}
+			.insideBox {
+			  position: absolute;
+			  left: 40px;
+			}
+			table{
+			  border-collapse: collapse;
+			}
+			th, td {
+			text-align: center;
+			padding: 8px;
+			}
+			tr:nth-child(even) {background-color: lightgrey;}
+</style>
+</head>
+<body>
+<div class= "mainbox" ng-controller = "myControllerRequest">
+				<p style="text-align: center;font-family: cursive;font-style: normal;">Illinios State University</p>
+				<p style="text-align: center;font-family: cursive;font-style: normal;">Address : 100 N University ST, Normal, IL 61761, USA  Telephone: 815-226-4901</p>
+                <div class="tab">
+                    <button class="tablinks" ng-click = "showAdmissionPortal()">Admission Requests</button>
+                    <button class="tablinks" ng-click = "showPublishPortal()">Publish Student Credential</button>
+                </div>
+				<div ng-show="admission">
+					<p style="font-family: cursive;font-style: normal;font-size: x-large;padding-left:40px;">Applications for Admission</p>
+					<div class = "insideBox">
+						<table style="width : 700px;">
+							<tr>
+								<th>Request ID</th>
+								<th>Request Date</th>
+								<th>Applicant Name</th>
+								<th>Applied For</th>
+								<th>Status</th>
+								<th>Digital Identity Verified</th>
+							<tr>
+							<tr ng-repeat = "x in requestTableData" ng-click="getApplicantData(x)">
+								<td><a href="#">{{x.doc._id}}</a></td>
+								<td>{{x.doc.requestDate}}</td>
+								<td>{{x.doc.applicantName}}</td>
+								<td>{{x.doc.appliedFor}}</td>
+								<td>{{x.doc.status}}</td>
+								<td>{{x.doc.digitalIdVerified}}</td>					 
+							</tr>
+						</table>
+					</div>
+				</div>
+                <div ng-show="publish">
+                    <p style="font-family: cursive;font-style: normal;font-size: x-large;padding-left:40px;">Publish Student's Credential</p>
+                <br>
+				<div  class = "insideBox">
+					<div class="container" style="padding-left:40px;">
+						<div>
+						&nbsp;&nbsp;<i><b>Batch :</b></i><br><br>
+						&nbsp;&nbsp;<select ng-model="selectedBatch" ng-options="x for x in batches"></select>
+						</div>
+						<div>
+						&nbsp;&nbsp;<i><b>Degree :</b></i><br><br>
+						&nbsp;&nbsp;<select ng-model="selectedDegree" ng-options="x for x in degrees"></select>
+						</div>
+						<div>
+						&nbsp;&nbsp;<i><b>Course :</b></i><br><br>
+						&nbsp;&nbsp;<select ng-model="selectedCourse" ng-options="x for x in coursenames" ></select>
+						</div>
+						<div style="padding-top:30px;">
+						&nbsp;&nbsp;<input type="button" value="Search" ng-click="searchData()">
+						</div>
+					</div>
+					<br>
+					<table style="width : 800px;">
+						<tr>
+							<th><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()"/></th>
+							<th>Student ID</th>
+							<th>SSN</th>
+							<th>Name</th>
+							<th>Course Completion Status</th>
+							<th>Course Completion Date</th>
+						<tr>
+						<tr ng-repeat = "x in publishData">
+							<td><input type="checkbox" ng-model="x.Selected"></td>
+							<td>{{x._id | limitTo: 6 }}</a></td>
+							<td>{{x.ssn}}</td>
+							<td>{{x.name}}</td>
+							<td>{{"On Going"}}</td>
+							<td>{{"-"}}</td>
+						</tr>
+					</table>
+					<br>
+				<div class="container" ng-show="isDataForPublish">
+					<div>
+					&nbsp;&nbsp;<i><b>Graduation Date(mm/dd/yyyy) :</b></i><br><br>
+					&nbsp;&nbsp;<input type="date"  ng-model="graduationDate">
+					</div>
+					<div style="padding-top:30px;">
+					&nbsp;&nbsp;<input type="button" value="Publish" ng-click="addGradDate()"/>
+					</div>
+				</div>
+ 
+			</div>
+		</div>
+ 
+	</div>
+</body>
+</html> 
